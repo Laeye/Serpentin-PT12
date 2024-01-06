@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PT12 Serpentin</title>
+    <script>
+        document.title = "PT12 Serpentin | "+new Date(Date.now()).toLocaleDateString()
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+</head>
+<style>
+
+html{
+    background: rgb(131,58,180);
+    background: linear-gradient(48deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    color: white;
+}
+
+.parent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80%;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.child {
+    opacity: 80%;
+    display: flex;
+    flex: 1;
+    margin: 5px;
+    height: 100px;
+    background-color: white;
+    color: black;
+    font-size: 150%;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.vertical-gap{
+    flex: 0.5;
+    height: 0;
+}
+
+.centered-div{
+    opacity: 1;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+</style>
+<body>
+    <h1 style="text-align:center;">Serpentin | PT12</h1>
+    <div class="parent">
+        
+    </div>
+</body>
+<script>
+    // Get request in JSON
+    let i = -1
+    fetch('http://localhost:3000').then(function(response) {
+        return response.text();
+    }).then(function(string) {
+        data = JSON.parse(string);
+        data.forEach(elem => {
+            var div = document.createElement("div");
+            div.className = "child";
+            var subdiv = document.createElement("div");
+            subdiv.className = "centered-div";
+            subdiv.innerText = elem.name;
+            /*var subdiv2 = document.createElement("div");
+            subdiv2.className = "centered-div";
+            historique = []
+            elem.history.forEach(h => {
+                historique.push((h+1))
+            })
+            subdiv2.innerText = historique;*/
+            div.innerHTML = subdiv.outerHTML;/*subdiv2.outerHTML*/
+            i++;
+            if(i%6 == 0){
+                var br = document.createElement("div");
+                br.className = "break";
+                document.getElementsByClassName("parent")[0].appendChild(br);
+            }
+            if((i-3)%6==0){
+                var br = document.createElement("div");
+                br.className = "vertical-gap";
+                document.getElementsByClassName("parent")[0].appendChild(br);
+            }
+            document.getElementsByClassName("parent")[0].appendChild(div);
+        });
+    });
+</script>
+</html>
